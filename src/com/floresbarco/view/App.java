@@ -1,7 +1,6 @@
-package com.floresbarco;
+package com.floresbarco.view;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,17 +8,16 @@ public class App extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JLabel titleWindow;
     private JPanel editorPane;
-    private JScrollPane textScroll;
-    private JTextArea editor;
+    private JScrollPane editorScroll;
+    private JTextPane editor;
     private JTabbedPane downTabPane;
-    private JPanel tab;
-    private JTextArea console;
+    private JPanel consoleTab;
     private JScrollPane consoleScroll;
     private JTabbedPane topTabPane;
-    private JButton GENERARAUTÓMATASButton;
-    private JButton ANALIZARENTRADASButton;
-    private JLabel editorTitle;
-    private JLabel consoleTitle;
+    private JButton automataButton;
+    private JButton analyzerButton;
+    private JTextPane console;
+    private JSplitPane splitPane;
     private JMenuBar menuBar;
     private JMenu menu1;
     private JMenuItem menuItem1, menuItem2, menuItem3, menuItem4, menuItem5;
@@ -37,8 +35,8 @@ public class App extends JFrame implements ActionListener {
     private void initComponents() {
 
         initMenu();
-
-        editor.setMargin(new Insets(10,10,10,10));
+        initTextEditor();
+        initButtons();
 
         this.setLayout(null); // LAYAUT ABSOLUTO
         this.setBounds(10,10,1000,800); // TAMAÑO DE VENTANA
@@ -48,6 +46,14 @@ public class App extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null); // PONE LA VENTANA EN EL CENTRO
         this.setContentPane(mainPanel);
         this.setVisible(true); // MUESTRA TODA LA VENTANA
+    }
+
+    private void initTextEditor() {
+        NumberLine editorLineNumber = new NumberLine(editor);
+        editorScroll.setRowHeaderView(editorLineNumber);
+
+        NumberLine consoleLineNumber = new NumberLine(console);
+        consoleScroll.setRowHeaderView(consoleLineNumber);
     }
 
     private void initMenu() {
@@ -78,6 +84,11 @@ public class App extends JFrame implements ActionListener {
         menu1.add(menuItem5);
     }
 
+    private void initButtons() {
+        automataButton.addActionListener(this);
+        analyzerButton.addActionListener(this);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == menuItem1) {
@@ -92,9 +103,12 @@ public class App extends JFrame implements ActionListener {
         } else if(e.getSource() == menuItem4) {
             // GUARDAR COMO
             System.out.println("GUARDAR COMO");
-        } else if(e.getSource() == menuItem5) {
+        } else if(e.getSource() == menuItem5 || e.getSource() == automataButton) {
             // GENERAR AUTOMATAS
             System.out.println("GENERAR AUTOMATAS");
+        } else if(e.getSource() == analyzerButton) {
+            // ANALIZAR ENTRADA
+            System.out.println("ANALIZAR ENTRADA");
         }
     }
 }
