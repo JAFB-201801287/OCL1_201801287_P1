@@ -25,7 +25,7 @@
         </constraints>
         <properties>
           <continuousLayout value="false"/>
-          <dividerLocation value="380"/>
+          <dividerLocation value="0"/>
           <dividerSize value="10"/>
           <orientation value="0"/>
         </properties>
@@ -129,14 +129,35 @@
                   </scrollpane>
                 </children>
               </grid>
-              <grid id="94b30" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="0" bottom="0" right="0"/>
+              <grid id="94b30" binding="lexTab" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="10" left="10" bottom="10" right="10"/>
                 <constraints>
                   <tabbedpane title="ANALIZADOR LÉXICO"/>
                 </constraints>
                 <properties/>
-                <border type="none"/>
-                <children/>
+                <border type="none" title="ANALIZADOR LÉXICO">
+                  <font size="18" style="1"/>
+                </border>
+                <children>
+                  <scrollpane id="aad7" binding="lexTableScroll">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title=""/>
+                    <children>
+                      <component id="7d30b" class="javax.swing.JTable" binding="lexTable">
+                        <constraints/>
+                        <properties>
+                          <autoCreateRowSorter value="false"/>
+                          <autoResizeMode value="2"/>
+                          <dropMode value="USE_SELECTION"/>
+                          <fillsViewportHeight value="false"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </scrollpane>
+                </children>
               </grid>
               <grid id="3b4e1" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
