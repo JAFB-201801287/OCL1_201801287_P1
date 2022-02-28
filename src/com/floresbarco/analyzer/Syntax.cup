@@ -1,0 +1,115 @@
+package com.floresbarco.analyzer;
+
+import java_cup.runtime.Symbol;
+
+/* METODO PARSER -> RETORNA EL SIMBOLO ANALIZADO */
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+parser code
+{:
+    private Symbol symbol;
+
+    public void syntax_error(Symbol symbol){
+        this.symbol = symbol;
+    }
+
+    public Symbol getSymbol(){
+        return this.symbol;
+    }
+:};
+
+/* SIMBOLOS TERMINALES */
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+
+terminal LineBreak,
+         Conj,
+         QuotationMarks, // COMILLAS (")
+         SingleQuotes, // COMILLAS SIMPLES (')
+         Dot, // PUNTO (.)
+         Plus, // MAS (+)
+         Asterisk, // ASTERISCO (*)
+         QuestionMarck, // SIGNO DE INTERROGACION (?)
+         VerticalBar, // BARRA VERTICA (|)
+         Dash, // GUION (~)
+         Comma, // COMA (,)
+         Semicolon, // PUNTO Y COMA (;)
+         Colon, // DOS PUNTOS (:)
+         CurlyBracket1, // LLAVE DE INICIO ({)
+         CurlyBracket2, // LLAVE DE CIERRE (})
+         Arrow, // FLECHA (->)
+         DoublePercent, // DOBLE PORCENTAJE (/%)
+         Digit,
+         String,
+         Letter,
+         Character;
+
+/* SIMBOLOS NO TERMINALES */
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+
+non terminal START,
+             SENTENCES1,
+             SENTENCE1,
+             SENTENCES2,
+             SENTENCE2,
+             START_INDENTIFIER,
+             IDENTIFIER,
+             ITEM_QUEUE,
+             JOIN,
+             EXPRESSIONS,
+             EXPRESSION,
+             TEST_STRING;
+
+// SE DEFINI INICIO COMO PRIMER NO TERMINAL
+start with START;
+
+/* PRODUCCIONES */
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+
+START ::= CurlyBracket1 SENTENCES1 DoublePercent DoublePercent SENTENCES2 CurlyBracket2;
+
+SENTENCES1 ::= SENTENCE1 SENTENCES1
+             | SENTENCE1;
+
+SENTENCE1 ::= JOIN
+            | EXPRESSIONS;
+
+SENTENCES2 ::= SENTENCE2 SENTENCES2
+             | SENTENCE2;
+
+SENTENCE2 ::= TEST_STRING;
+
+START_INDENTIFIER ::= Letter IDENTIFIER;
+
+IDENTIFIER ::= Letter IDENTIFIER
+             | Digit IDENTIFIER
+             | Letter
+             | Digit;
+
+ITEM_QUEUE ::= Digit Comma ITEM_QUEUE
+             | Letter Comma ITEM_QUEUE
+             | Character Comma ITEM_QUEUE
+             | Digit
+             | Letter
+             | Character;
+
+JOIN ::= Conj Colon START_INDENTIFIER Arrow Letter Dash Letter Semicolon
+       | Conj Colon START_INDENTIFIER Arrow Digit Dash Digit Semicolon
+       | Conj Colon START_INDENTIFIER Arrow Character Dash Character Semicolon
+       | Conj Colon START_INDENTIFIER Arrow ITEM_QUEUE Semicolon;
+
+EXPRESSIONS ::= START_INDENTIFIER Arrow EXPRESSION Semicolon;
+
+EXPRESSION ::= Dot EXPRESSION EXPRESSION
+             | VerticalBar EXPRESSION EXPRESSION
+             | Asterisk EXPRESSION
+             | Plus EXPRESSION
+             | QuestionMarck EXPRESSION
+             | Digit
+             | Letter
+             | LineBreak
+             | QuotationMarks
+             | SingleQuotes
+             | Character
+             | CurlyBracket1 START_INDENTIFIER CurlyBracket2
+             | String;
+
+TEST_STRING ::= START_INDENTIFIER Colon String Semicolon;

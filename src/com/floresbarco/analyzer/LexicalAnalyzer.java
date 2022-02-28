@@ -76,6 +76,12 @@ public class LexicalAnalyzer {
                 case Percent:
                     lexTable = new LexTable(line, 0, lexer.yytext(), "SIGNO DE PORCENTAJE");
                     break;
+                case Digit:
+                    lexTable = new LexTable(line, 0, lexer.yytext(), "DIGITO");
+                    break;
+                case Letter:
+                    lexTable = new LexTable(line, 0, lexer.yytext(), "LETRA");
+                    break;
                 case Identifier:
                     lexTable = new LexTable(line, 0, lexer.yytext(), "IDENTIFICADOR");
                     break;

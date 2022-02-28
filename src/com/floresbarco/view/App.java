@@ -1,9 +1,6 @@
 package com.floresbarco.view;
 
-import com.floresbarco.analyzer.Generate;
-import com.floresbarco.analyzer.Lexer;
-import com.floresbarco.analyzer.LexicalAnalyzer;
-import com.floresbarco.analyzer.Tokens;
+import com.floresbarco.analyzer.*;
 import com.floresbarco.controller.LexTableController;
 
 import javax.swing.*;
@@ -46,6 +43,7 @@ public class App extends JFrame implements ActionListener {
 
         //Generate generate = new Generate();
         //generate.generateFlex();
+        //generate.generateCup();
     }
 
     private void initComponents() {
@@ -147,7 +145,9 @@ public class App extends JFrame implements ActionListener {
 
     private void analyzerInput() throws IOException {
         LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer();
+        SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer();
         lexicalAnalyzer.analyzer(editor.getText());
+        console.setText(syntaxAnalyzer.analyzer(editor.getText()));
         initTable();
 
     }

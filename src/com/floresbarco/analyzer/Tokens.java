@@ -2,12 +2,15 @@ package com.floresbarco.analyzer;
 
 public enum Tokens {
     Line,
+    LineBreak,
     /* PALABRAS RESERVADAS ---------------------------------------- */
     Conj, // PALABRA RESERVADA PARA CONJUNTOS
 
     /* SIMBOLOS --------------------------------------------------- */
     QuotationMarks, // COMILLAS (")
+    QuotationMarks1, // COMILLAS (\")
     SingleQuotes, // COMILLAS SIMPLES (')
+    SingleQuotes1, // COMILLAS SIMPLES (\')
     Dot, // PUNTO (.)
     Plus, // MAS (+)
     Asterisk, // ASTERISCO (*)
@@ -23,8 +26,13 @@ public enum Tokens {
     Percent, // PORCENTAJE (%)
 
     /* EXPRESIONES REGULARES --------------------------------------- */
+    Letter,
+    Digit,
     Identifier, // IDENTIFICADOR
 
+    /* CARACTER ------------------------------------------- */
+    Character,
+
     /* MANEJO DE ERRORES ------------------------------------------- */
-    Character
+    Error
 }

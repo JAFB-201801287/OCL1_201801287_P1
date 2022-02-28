@@ -9,7 +9,7 @@ import static com.floresbarco.analyzer.Tokens.*;
 
 LETTER = [a-zA-Z_]
 DIGIT = [0-9]
-SPACE = [ ,\t,\r]+
+SPACE = [ \t\r]+
 
 %{
     public String lexeme;
@@ -23,19 +23,22 @@ SPACE = [ ,\t,\r]+
 ("//"(.)*) { /*Ignore*/ }
 
 /* COMENTARI MULTILINEA */
-("<!"(.)*"!>") { /*Ignore*/ }
+("<!"[^"<!"|"!>"]*"!>") { /*Ignore*/ }
 
 /* SALTO DE LINEA */
 ("\n") { return Line; }
+("\\n") { return LineBreak; }
 
 /* COJUNTO */
 ("CONJ") { return Conj; }
 
 /* COMILLAS */
-("\"") { return QuotationMarks; }
+("\""|"\”"|"\“") { return QuotationMarks; }
+("\\\""|"\\\”"|"\\\“") { return QuotationMarks1; }
 
 /* COMILLAS SIMPLES */
-("\'") { return SingleQuotes; }
+("\'"|"\‘"|"\’") { return SingleQuotes; }
+("\\\'"|"\\\‘"|"\\\’") { return SingleQuotes1; }
 
 /* PUNTO */
 (".") { return Dot; }
@@ -53,7 +56,7 @@ SPACE = [ ,\t,\r]+
 ("|") { return VerticalBar; }
 
 /* GUION */
-("-") { return Dash; }
+("-"|"~") { return Dash; }
 
 /* COMA */
 (",") { return Comma; }
@@ -76,8 +79,17 @@ SPACE = [ ,\t,\r]+
 /* PORCENTAJE */
 ("%") { return Percent; }
 
-/* IDENTIFICADOR */
-({LETTER}+({LETTER}|{DIGIT})*) { return Identifier; }
+// LETRA
+({LETTER}) { return Letter; }
 
-/* ERROR DE ANALISIS */
-(.) { return Character; }
+// LETRA
+({DIGIT}) { return Digit; }
+
+/* IDENTIFICADOR */
+({LETTER}{LETTER}({LETTER}|{DIGIT})*) { return Identifier; }
+
+/* CARACTER */
+([!-\/]|[:-@]|[\[-\_]|[\{-\~]) { return Character; }
+
+/* MANEJO DE ERRORES */
+(.) { return Error; }
