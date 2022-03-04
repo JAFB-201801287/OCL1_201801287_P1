@@ -2,6 +2,7 @@ package com.floresbarco.view;
 
 import com.floresbarco.analyzer.*;
 import com.floresbarco.controller.LexTableController;
+import com.floresbarco.controller.TreeController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -134,6 +135,7 @@ public class App extends JFrame implements ActionListener {
             } else if(e.getSource() == menuItem5 || e.getSource() == automataButton) {
                 // GENERAR AUTOMATAS
                 System.out.println("GENERAR AUTOMATAS");
+                TreeController.getInstance().automataTreeReport();
             } else if(e.getSource() == analyzerButton) {
                 // ANALIZAR ENTRADA
                 analyzerInput();

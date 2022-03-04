@@ -1,12 +1,17 @@
 package com.floresbarco.analyzer;
 
 import java_cup.runtime.Symbol;
+import com.floresbarco.model.Node;
+import com.floresbarco.model.Group;
+import com.floresbarco.controller.TreeController;
 
 /* METODO PARSER -> RETORNA EL SIMBOLO ANALIZADO */
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 parser code
 {:
     private Symbol symbol;
+    private Integer countNode = 0;
+    private Integer countIdentifier = 1;
 
     public void syntax_error(Symbol symbol){
         this.symbol = symbol;
@@ -77,12 +82,12 @@ SENTENCES2 ::= SENTENCE2 SENTENCES2
 
 SENTENCE2 ::= TEST_STRING;
 
-START_INDENTIFIER ::= Letter IDENTIFIER;
+START_INDENTIFIER ::= Letter:l IDENTIFIER:c {: RESULT = ((String) l) + ((String) c); :};
 
-IDENTIFIER ::= Letter IDENTIFIER
-             | Digit IDENTIFIER
-             | Letter
-             | Digit;
+IDENTIFIER ::= Letter:l IDENTIFIER:c {: RESULT = ((String) l) + ((String) c); :}
+             | Digit:d IDENTIFIER:c {: RESULT = ((String) d) + ((String) c); :}
+             | Letter:l {: RESULT = (String) l; :}
+             | Digit:d {: RESULT = (String) d; :};
 
 ITEM_QUEUE ::= Digit Comma ITEM_QUEUE
              | Letter Comma ITEM_QUEUE
@@ -91,25 +96,31 @@ ITEM_QUEUE ::= Digit Comma ITEM_QUEUE
              | Letter
              | Character;
 
-JOIN ::= Conj Colon START_INDENTIFIER Arrow Letter Dash Letter Semicolon
-       | Conj Colon START_INDENTIFIER Arrow Digit Dash Digit Semicolon
-       | Conj Colon START_INDENTIFIER Arrow Character Dash Character Semicolon
-       | Conj Colon START_INDENTIFIER Arrow ITEM_QUEUE Semicolon;
+JOIN ::= Conj Colon START_INDENTIFIER:key Arrow Letter:letter1 Dash Letter:lletter2 Semicolon {:  :}
+       | Conj Colon START_INDENTIFIER:key Arrow Digit:digit1 Dash Digit:digit2 Semicolon
+       | Conj Colon START_INDENTIFIER:key Arrow Character:char1 Dash Character:char2 Semicolon
+       | Conj Colon START_INDENTIFIER:key Arrow ITEM_QUEUE Semicolon;
 
-EXPRESSIONS ::= START_INDENTIFIER Arrow EXPRESSION Semicolon;
+EXPRESSIONS ::= START_INDENTIFIER:key Arrow EXPRESSION:exp Semicolon {:TreeController.getInstance().addExpression(
+(String) key,
+new Node(countNode+1, ".", "", (Node) exp, new Node(countNode+2, "#", "", null, null, countIdentifier+1), ".")
+);
+countNode = 0;
+countIdentifier = 1;
+:};
 
-EXPRESSION ::= Dot EXPRESSION EXPRESSION
-             | VerticalBar EXPRESSION EXPRESSION
-             | Asterisk EXPRESSION
-             | Plus EXPRESSION
-             | QuestionMarck EXPRESSION
-             | Digit
-             | Letter
-             | LineBreak
-             | QuotationMarks
-             | SingleQuotes
-             | Character
-             | CurlyBracket1 START_INDENTIFIER CurlyBracket2
-             | String;
+EXPRESSION ::= Dot:sym EXPRESSION:exp1 EXPRESSION:exp2 {: RESULT = new Node(countNode, (String) sym, "", (Node) exp1, (Node) exp2, "."); countNode++; :}
+             | VerticalBar:sym EXPRESSION:exp1 EXPRESSION:exp2 {: RESULT = new Node(countNode, (String) sym, "", (Node) exp1, (Node) exp2, "|"); countNode++; :}
+             | Asterisk:sym EXPRESSION:exp {: RESULT = new Node(countNode, (String) sym, "", (Node) exp, null, "*"); countNode++; :}
+             | Plus:sym EXPRESSION:exp {: RESULT = new Node(countNode, (String) sym, "", (Node) exp, null, "+"); countNode++; :}
+             | QuestionMarck:sym EXPRESSION:exp {: RESULT = new Node(countNode, (String) sym, "", (Node) exp, null, "?"); countNode++; :}
+             | Digit:exp {: RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; :}
+             | Letter:exp {: RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; :}
+             | LineBreak:exp {: RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; :}
+             | QuotationMarks:exp {: RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; :}
+             | SingleQuotes:exp {: RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; :}
+             | Character:exp {: RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; :}
+             | CurlyBracket1 START_INDENTIFIER:exp CurlyBracket2 {: RESULT = new Node(countNode, "", (String) exp, null, null, countIdentifier); countNode++; countIdentifier++; :}
+             | String:exp {: RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; :};
 
 TEST_STRING ::= START_INDENTIFIER Colon String Semicolon;

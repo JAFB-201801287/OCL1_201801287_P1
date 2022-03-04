@@ -6,6 +6,9 @@
 package com.floresbarco.analyzer;
 
 import java_cup.runtime.Symbol;
+import com.floresbarco.model.Node;
+import com.floresbarco.model.Group;
+import com.floresbarco.controller.TreeController;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -214,6 +217,8 @@ public class Syntax extends java_cup.runtime.lr_parser {
 
 
     private Symbol symbol;
+    private Integer countNode = 0;
+    private Integer countIdentifier = 1;
 
     public void syntax_error(Symbol symbol){
         this.symbol = symbol;
@@ -338,7 +343,13 @@ class CUP$Syntax$actions {
           case 9: // START_INDENTIFIER ::= Letter IDENTIFIER 
             {
               Object RESULT =null;
-
+		int lleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object l = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = ((String) l) + ((String) c); 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("START_INDENTIFIER",5, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -347,7 +358,13 @@ class CUP$Syntax$actions {
           case 10: // IDENTIFIER ::= Letter IDENTIFIER 
             {
               Object RESULT =null;
-
+		int lleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object l = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = ((String) l) + ((String) c); 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("IDENTIFIER",6, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -356,7 +373,13 @@ class CUP$Syntax$actions {
           case 11: // IDENTIFIER ::= Digit IDENTIFIER 
             {
               Object RESULT =null;
-
+		int dleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object d = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = ((String) d) + ((String) c); 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("IDENTIFIER",6, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -365,7 +388,10 @@ class CUP$Syntax$actions {
           case 12: // IDENTIFIER ::= Letter 
             {
               Object RESULT =null;
-
+		int lleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object l = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = (String) l; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("IDENTIFIER",6, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -374,7 +400,10 @@ class CUP$Syntax$actions {
           case 13: // IDENTIFIER ::= Digit 
             {
               Object RESULT =null;
-
+		int dleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int dright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object d = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = (String) d; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("IDENTIFIER",6, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -437,7 +466,16 @@ class CUP$Syntax$actions {
           case 20: // JOIN ::= Conj Colon START_INDENTIFIER Arrow Letter Dash Letter Semicolon 
             {
               Object RESULT =null;
-
+		int keyleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).left;
+		int keyright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).right;
+		Object key = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).value;
+		int letter1left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).left;
+		int letter1right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).right;
+		Object letter1 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).value;
+		int lletter2left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int lletter2right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object lletter2 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		  
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("JOIN",8, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-7)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -446,6 +484,15 @@ class CUP$Syntax$actions {
           case 21: // JOIN ::= Conj Colon START_INDENTIFIER Arrow Digit Dash Digit Semicolon 
             {
               Object RESULT =null;
+		int keyleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).left;
+		int keyright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).right;
+		Object key = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).value;
+		int digit1left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).left;
+		int digit1right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).right;
+		Object digit1 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).value;
+		int digit2left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int digit2right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object digit2 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("JOIN",8, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-7)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
@@ -455,6 +502,15 @@ class CUP$Syntax$actions {
           case 22: // JOIN ::= Conj Colon START_INDENTIFIER Arrow Character Dash Character Semicolon 
             {
               Object RESULT =null;
+		int keyleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).left;
+		int keyright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).right;
+		Object key = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)).value;
+		int char1left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).left;
+		int char1right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).right;
+		Object char1 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).value;
+		int char2left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int char2right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object char2 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("JOIN",8, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-7)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
@@ -464,6 +520,9 @@ class CUP$Syntax$actions {
           case 23: // JOIN ::= Conj Colon START_INDENTIFIER Arrow ITEM_QUEUE Semicolon 
             {
               Object RESULT =null;
+		int keyleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).left;
+		int keyright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).right;
+		Object key = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).value;
 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("JOIN",8, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-5)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
@@ -473,6 +532,18 @@ class CUP$Syntax$actions {
           case 24: // EXPRESSIONS ::= START_INDENTIFIER Arrow EXPRESSION Semicolon 
             {
               Object RESULT =null;
+		int keyleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).left;
+		int keyright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).right;
+		Object key = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)).value;
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		TreeController.getInstance().addExpression(
+(String) key,
+new Node(countNode+1, ".", "", (Node) exp, new Node(countNode+2, "#", "", null, null, countIdentifier+1), ".")
+);
+countNode = 0;
+countIdentifier = 1;
 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSIONS",9, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-3)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
@@ -482,7 +553,16 @@ class CUP$Syntax$actions {
           case 25: // EXPRESSION ::= Dot EXPRESSION EXPRESSION 
             {
               Object RESULT =null;
-
+		int symleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)).left;
+		int symright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)).right;
+		Object sym = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)).value;
+		int exp1left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int exp1right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object exp1 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int exp2left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int exp2right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp2 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) sym, "", (Node) exp1, (Node) exp2, "."); countNode++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -491,7 +571,16 @@ class CUP$Syntax$actions {
           case 26: // EXPRESSION ::= VerticalBar EXPRESSION EXPRESSION 
             {
               Object RESULT =null;
-
+		int symleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)).left;
+		int symright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)).right;
+		Object sym = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)).value;
+		int exp1left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int exp1right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object exp1 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int exp2left = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int exp2right = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp2 = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) sym, "", (Node) exp1, (Node) exp2, "|"); countNode++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -500,7 +589,13 @@ class CUP$Syntax$actions {
           case 27: // EXPRESSION ::= Asterisk EXPRESSION 
             {
               Object RESULT =null;
-
+		int symleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int symright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object sym = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) sym, "", (Node) exp, null, "*"); countNode++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -509,7 +604,13 @@ class CUP$Syntax$actions {
           case 28: // EXPRESSION ::= Plus EXPRESSION 
             {
               Object RESULT =null;
-
+		int symleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int symright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object sym = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) sym, "", (Node) exp, null, "+"); countNode++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -518,7 +619,13 @@ class CUP$Syntax$actions {
           case 29: // EXPRESSION ::= QuestionMarck EXPRESSION 
             {
               Object RESULT =null;
-
+		int symleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int symright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object sym = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) sym, "", (Node) exp, null, "?"); countNode++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -527,7 +634,10 @@ class CUP$Syntax$actions {
           case 30: // EXPRESSION ::= Digit 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -536,7 +646,10 @@ class CUP$Syntax$actions {
           case 31: // EXPRESSION ::= Letter 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -545,7 +658,10 @@ class CUP$Syntax$actions {
           case 32: // EXPRESSION ::= LineBreak 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -554,7 +670,10 @@ class CUP$Syntax$actions {
           case 33: // EXPRESSION ::= QuotationMarks 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -563,7 +682,10 @@ class CUP$Syntax$actions {
           case 34: // EXPRESSION ::= SingleQuotes 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -572,7 +694,10 @@ class CUP$Syntax$actions {
           case 35: // EXPRESSION ::= Character 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -581,7 +706,10 @@ class CUP$Syntax$actions {
           case 36: // EXPRESSION ::= CurlyBracket1 START_INDENTIFIER CurlyBracket2 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.elementAt(CUP$Syntax$top-1)).value;
+		 RESULT = new Node(countNode, "", (String) exp, null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.elementAt(CUP$Syntax$top-2)), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
@@ -590,7 +718,10 @@ class CUP$Syntax$actions {
           case 37: // EXPRESSION ::= String 
             {
               Object RESULT =null;
-
+		int expleft = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()).right;
+		Object exp = (Object)((java_cup.runtime.Symbol) CUP$Syntax$stack.peek()).value;
+		 RESULT = new Node(countNode, (String) exp, "", null, null, countIdentifier); countNode++; countIdentifier++; 
               CUP$Syntax$result = parser.getSymbolFactory().newSymbol("EXPRESSION",10, ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntax$stack.peek()), RESULT);
             }
           return CUP$Syntax$result;
